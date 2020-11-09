@@ -1,0 +1,20 @@
+{% extends "accounts/base.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+ <br> <h1>Hello users!</h1>
+ <h2>Welcome to The Blog Page</h2>
+
+ <br>
+ {% if user.is_authenticated %}
+   <h4>Logged as {{ user.username }}</h4>
+ {% endif %}<br><br>
+
+   <a class="btn btn-primary" href="{% url 'post_list'  %}">
+     Go to List of Posts!
+   </a>
+
+</div>
+
+{% endblock %}

@@ -16,18 +16,31 @@
     <!-- Custom styles for this template -->
     <link href="{% static  'css/modern-business.css' %}" rel="stylesheet">
 
-    {# Custom CSS#}
-    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <style >
+      html, body{
+        height: 100%;
+        /* font-family: "Playfair Display", serif; */
+      }
+      .auth-box{
+        border: 3px solid lightgray;
+        border-radius: 10px;
+        padding: 25px 0px 25px 0px ;
+        width: 600px;
+        margin: auto ;
+      }
+      .login-form-container{
+        width: 400px;
+        margin: auto;
+      }
+      .registration-form-container{
+        width: 900px;
+        margin: auto;
+      }
+      .outer-area{
+        margin-top: 50px;
+      }
 
-    {# Fonts#}
-    <link href="https://fonts.googleapis.com/css?family=Montserrat|Russo+One" rel="stylesheet">
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
-    <!-- Alternative to Bootstrap 3 Glyphicons -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
+    </style>
 </head>
 
 <body>
@@ -44,19 +57,37 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/posts">Posts</a>
                 </li>
+                {% if request.user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/auth/login">Login</a>
+                    <a class="nav-link" href='{% url "logout" %}'>Logout</a>
                 </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                {% endif %}
+
                 <li class="nav-item">
                     <a class="nav-link" href="/auth/register">Register</a>
                 </li>
+
+                {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href='{% url "profile" pk=user.pk %}'>Profile</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </div>
 </nav>
 
-{% block container %}
-{% endblock container %}
+
+    <div class="container">
+    {% block content %}
+
+    {% endblock %}
+    </div>
+
 
 <!-- Footer -->
 <footer class="py-5 bg-dark">
@@ -77,4 +108,4 @@
 
 </body>
 
-</html>"
+</html>

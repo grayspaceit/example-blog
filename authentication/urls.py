@@ -11,7 +11,6 @@ from . import views
 # app_name = 'accounts'
 
 urlpatterns = [
-    path('', views.HomePage.as_view(), name="index"),
 
     # other urls
     path('activate/<uidb64>/<token>/', ActivateAccount.as_view(), name='activate'),

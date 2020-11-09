@@ -69,3 +69,36 @@ def comment_remove(request, pk):
     post_pk = comment.post.pk
     comment.delete()
     return redirect('post_detail', pk=post_pk)
+
+
+
+
+#######################################
+##         Api section           ##
+#######################################
+import json
+import requests
+
+
+def post_list(request):
+    post_List_api_call = requests.get("https://jsonplaceholder.typicode.com/posts")
+    try:
+        posts=json.loads(post_List_api_call.content)
+    except Exception as e:
+        posts= "error"
+    return render(request, 'blog-listing.html', {'posts':posts})
+
+
+def post_details(request, *args, **kwargs):
+    post_id = kwargs.get("post_id")
+
+    post_detail_api_call = requests.get(f"https://jsonplaceholder.typicode.com/posts/{post_id}")
+    comment_api_call = requests.get(f"https://jsonplaceholder.typicode.com/posts/{post_id}/comments")
+    try:
+        post_detail = json.loads(post_detail_api_call.content)
+        comments = json.loads(comment_api_call.content)
+    except Exception as e:
+        post_detail = "error"
+        comments = "error"
+
+    return render(request, 'blog-post.html',{'post':post_detail, 'comments':comments})
