@@ -1,0 +1,30 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Home Page{% endblock title %}
+
+{% block content %}
+
+    <div class="container jumbotron ">
+
+      <h2>Hello, {{user.username}}</h2><br>
+      {% if user.is_authenticated %}
+
+      <p><strong>First Name: </strong> {{user.first_name}} </p>
+      <p><strong>Last Name: </strong> {{user.last_name}} </p>
+      <p><strong>Username: </strong>{{user.username}}</p>
+      <p><strong>Email is: </strong>{{user.email }}</p>
+      <br>
+      <a href="{% url 'update_profile' pk=user.id %}">Edit Profile</a>
+      <br><br>
+      <a href="{% url 'change_password' %}">Change Password</a>
+      <br><br>
+      {% else %}
+      <a href="{% url 'login' %}">Login</a>
+      <br><br>
+      <a href="{% url 'password_reset' %}">Forgot Password</a>
+      <br><br>
+      <a href="{% url 'signup' %}">Sign Up</a>
+      {% endif %}
+
+    </div>
+{% endblock content %}
